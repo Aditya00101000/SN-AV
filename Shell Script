@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# File to save the downloaded content
+DATA_URL="https://www.amfiindia.com/spages/NAVAll.txt"
+OUT_FILE="nav_data.tsv"
+
+# Download the file
+curl -s "$DATA_URL" | \
+awk -F ';' 'BEGIN {OFS="\t"} 
+    /^[0-9]/ && NF>=5 {print $4, $5}' > "$OUT_FILE"
+
+echo " Extracted Scheme Name and Asset Value to $OUT_FILE"
